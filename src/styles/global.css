@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@layer base {
+  /* 主にLPページで使っているものです */
+  :root {
+    --clr-pink: #f1949f;
+    --clr-coffee: #9a6c55;
+    --clr-fef2d3: #fef2d3;
+
+    --font-main: "Noto Sans JP", sans-serif;
+    --font-mont: "Montserrat", sans-serif;
+    --container-size: 750px;
+    --main-container-size: 1000px;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-main);
+    background-image: url('/images/sk_mobile_base.webp');
+    background-repeat: repeat;
+    background-size: auto; 
+    background-position: top left;
+    background-color: #f8f8f8; 
+  }
+
+@media (min-width: 768px) {
+  body {
+    background-image: url('/images/sk_pc_base.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+  }
+}
+  img {
+    @apply w-full h-auto inline-block;
+  }
+}
+
+@layer utilities {
+  .pcOnly {
+    @apply hidden md:block;
+  }
+  .spOnly {
+    @apply md:hidden;
+  }
+  .text-48 {
+    font-size: clamp(1.5rem, 0.188rem + 6vw, 3rem);
+  }
+  .text-36 {
+    font-size: clamp(1.25rem, 0.375rem + 4vw, 2.25rem);
+  }
+  .text-28 {
+    font-size: clamp(0.875rem, 0.109rem + 3.5vw, 1.75rem);
+  }
+  .grid-1-1 {
+    grid-area: 1/-1;
+  }
+}

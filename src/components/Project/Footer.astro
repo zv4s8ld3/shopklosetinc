@@ -1,0 +1,72 @@
+---
+// src/components/Project/Footer.astro
+import ja from "../../locales/ja/translation.json";
+import en from "../../locales/en/translation.json";
+import ko from "../../locales/ko/translation.json";
+
+const locales = { ja, en, ko };
+const defaultLang = "ja";
+const locale = (Astro.currentLocale as keyof typeof locales) || defaultLang;
+
+const t = locales[locale].common;
+const currentYear = new Date().getFullYear();
+const l = (path: string) => locale === defaultLang ? path : `/${locale}${path}`;
+---
+
+<footer class="w-full bg-white text-gray-800 py-16 px-4 sm:px-6 lg:px-8">
+  <div class="container mx-auto max-w-5xl flex flex-col items-center gap-y-10">
+    
+    <div class="mb-2">
+      <a href={l("/")} aria-label="トップページへ">
+        <img src="/images/f_ks_logo.png" alt="Shop Kloset Inc. Logo" class="h-6 w-auto" />
+      </a>
+    </div>
+
+    <nav class="text-center">
+      <ul class="flex flex-wrap justify-center gap-x-6 gap-y-3 font-medium">
+        <li><a href={l("/")} class="nav-link inline-block py-1">Home / トップ</a></li>
+        <li><a href={l("/about")} class="nav-link inline-block py-1">About / 私たちについて</a></li>
+        <li><a href={l("/business")} class="nav-link inline-block py-1">Business / 事業内容</a></li>
+        <li><a href={l("/company")} class="nav-link inline-block py-1">Company / 企業概要</a></li>
+        <li><a href={l("/contact")} class="nav-link inline-block py-1">Contact / お問い合わせ</a></li>
+      </ul>
+      <ul class="flex justify-center gap-x-5 mt-6 text-sm text-gray-600">
+        <li><a href={l("/privacypolicy")} class="nav-link inline-block py-1">Privacy Policy / プライバシーポリシー</a></li>
+      </ul>
+    </nav>
+
+    <div class="mt-2">
+      <address class="text-center not-italic leading-relaxed text-sm text-gray-700">
+        <span class="whitespace-pre-line">{t.contact}</span><br />
+        Tel. +81-3-5489-0018<br />
+        <a href="mailto:info@shopkloset.com" class="text-blue-600 hover:underline">info@shopkloset.com</a>
+      </address>
+    </div>
+
+    <div class="w-full border-t border-gray-200 pt-8 mt-4 text-center text-xs text-gray-500">
+      <small>&copy; {currentYear} {t.layout_title || "Shop Kloset Inc."}</small>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ★ @apply を完全に排除しました ★ */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #1f2937; /* Tailwindのgray-800相当 */
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-out;
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+</style>

@@ -1,0 +1,93 @@
+---
+// src/components/Project/Header.astro
+import NavItems from "../Parts/NavItems.astro";
+
+const locale = Astro.currentLocale || "ja";
+const defaultLang = "ja";
+const l = (path: string) => locale === defaultLang ? path : `/${locale}${path}`;
+
+const { pathname } = Astro.url;
+// 多言語対応に合わせ、/ja/ や /en/ も考慮して判定
+const isHome = pathname === "/" || pathname === `/${locale}/` || pathname === `/${locale}`;
+
+const defaultColor = isHome ? "#654321" : "#5C524A";
+---
+
+<header class="main-header w-full fixed top-0 pt-6 left-0 z-50 pb-2" id="main-header">
+  <div class="header-inner flex justify-between items-center front-container">
+    <a href={l("/")}>
+      <h1>
+        <img
+          src="/images/Shopkloset_Logo.svg"
+          alt="Shop Kloset Inc"
+          class="company-logo w-[15rem] z-50"
+        />
+      </h1>
+    </a>
+    
+    <nav class="hidden md:block">
+      <NavItems clr={defaultColor} />
+    </nav>
+
+    <div class="spOnly menuBtn absolute top-6 right-4 z-50 bg-black/10 rounded-full md:hidden" id="spMenuBtn" role="button">
+      <div class="btn-inner relative w-8 h-8">
+        <span class="span1"></span>
+        <span class="span2"></span>
+        <span class="span3"></span>
+      </div>
+    </div>
+
+    <div class="sp-menu-modal fixed top-0 left-0 w-full h-full text-white z-40 overflow-y-scroll pt-24 px-6 md:hidden" id="spMenuModal" style="display: none;">
+      <NavItems clr="#FFFFFF" flow={"flex-col"} />
+    </div>
+  </div>
+</header>
+
+<style>
+  /* エラーの原因となる @apply を排除し、標準的なCSSで記述 */
+  .main-header {
+    color: var(--header-text-color, #654321);
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* スクロール時の制御（JavaScriptでbodyに付与されるクラスに対応） */
+  :global(body.is-scrolled) .main-header {
+    color: #000000; /* text-black */
+  }
+
+  :global(body.home.is-scrolled) .main-header {
+    background-color: #ffffff; /* bg-white */
+  }
+
+  /* ハンバーガーメニューの三本線（白に固定） */
+  .menuBtn span {
+    background-color: white;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 2px;
+    width: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .span1 { top: 10px; }
+  .span2 { top: 16px; }
+  .span3 { top: 22px; }
+
+  /* メニュー展開時のアニメーション */
+  :global(body.menu-open) .span1 {
+    transform: translateY(6px) rotate(45deg);
+  }
+  :global(body.menu-open) .span2 {
+    opacity: 0;
+  }
+  :global(body.menu-open) .span3 {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .sp-menu-modal {
+    background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+  }
+</style>

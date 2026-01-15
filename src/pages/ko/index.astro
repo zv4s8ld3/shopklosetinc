@@ -1,0 +1,67 @@
+---
+import Contents from "../../components/Front/Contents.astro";
+import Firstview from "../../components/Front/Firstview.astro";
+import Footer from "../../components/Project/Footer.astro";
+import Header from "../../components/Project/Header.astro";
+import Layouts from "../../layouts/Layouts.astro";
+import "../../styles/front.css";
+
+import ja from "../../locales/ja/translation.json";
+import en from "../../locales/en/translation.json";
+import ko from "../../locales/ko/translation.json";
+
+const locales = { ja, en, ko };
+const locale = (Astro.currentLocale as keyof typeof locales) || "ja";
+const t = locales[locale];
+---
+
+<Layouts title={t.home.layout_title}>
+  <Header />
+  <div role="main" class="main">
+    <Firstview />
+    <Contents />
+  </div>
+  <Footer />
+</Layouts>
+
+<script src="../../lib/front.ts"></script>
+
+<style is:global>
+  body.home #main-header {
+    background: transparent;
+  }
+
+  .front-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4%;
+    width: 100%;
+  }
+
+/* --- 背景画像の設定（レスポンシブ対応） --- */
+body.home .firstview { 
+    position: relative; 
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    min-height: 80vh; 
+  width: 100%;
+
+    /* 【1】デフォルト設定：スマホ用 (sp_hero.png) */
+    background-image: url('/images/sp_hero.png');
+  }
+
+/* 【2】タブレット用：画面幅 768px 以上 (tablet_hero.png) */
+@media (min-width: 768px) {
+  body.home .firstview {
+    background-image: url('/images/tablet_hero.png');
+  }
+}
+
+/* 【3】PC用：画面幅 1024px 以上 (pc_hero.png) */
+@media (min-width: 1024px) {
+  body.home .firstview {
+    background-image: url('/images/pc_hero.png');
+  }
+}
+</style>

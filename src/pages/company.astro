@@ -1,0 +1,39 @@
+---
+import CompanyOverview from "../components/Project/CompanyOverview.astro";
+import CompanyService from "../components/Project/CompanyService.astro";
+import Footer from "../components/Project/Footer.astro";
+import Header from "../components/Project/Header.astro";
+import SectionHeaderTitle2 from "../components/Project/SectionHeaderTitle2.astro";
+import Layouts from "../layouts/Layouts.astro";
+import "../styles/front.css";
+
+import ja from "../locales/ja/translation.json";
+import en from "../locales/en/translation.json";
+import ko from "../locales/ko/translation.json";
+
+const locales = { ja, en, ko };
+const locale = (Astro.currentLocale as keyof typeof locales) || "ja";
+const t = locales[locale];
+---
+
+<Layouts title={t.common.title_company}>
+  <Header />
+  <main>
+    <SectionHeaderTitle2
+      title={t.company.layout_title}
+      subTitle="company"
+      titleClass="text-[clamp(2rem,1.3rem+3vw,4rem)]"
+    />
+    <div class="md:my-20 overflow-x-hidden">
+      <div
+        class="min-h-[1100px] w-full bg-[#F6F6F6] container max-w-[1000px] mx-auto px-4 py-16"
+      >
+        <CompanyOverview />
+        <CompanyService />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layouts>
+
+<script src="../lib/front.ts"></script>

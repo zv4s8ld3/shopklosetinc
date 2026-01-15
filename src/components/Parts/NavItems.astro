@@ -1,0 +1,74 @@
+---
+// 1. 古いライブラリを消し、言語情報を取得
+const locale = Astro.currentLocale || "ja";
+const defaultLang = "ja";
+
+// 言語に応じたリンク変換関数
+const l = (path: string) => locale === defaultLang ? path : `/${locale}${path}`;
+
+const navItems = [
+  { text: "home", href: "/" },
+  { text: "about", href: "/about" },
+  { text: "business", href: "/business" },
+  { text: "company", href: "/company" },
+  { text: "contact", href: "/contact" },
+];
+
+interface Props {
+  clr?: string;
+  flow?: string;
+}
+const { clr, flow } = Astro.props;
+---
+
+<ul class:list={["flex flex-wrap gap-5 uppercase font-bold font-mont", flow]}>
+  {
+    navItems.map((el) => {
+      return (
+        <li class="nav-li-item">
+          <a href={l(el.href)} class="li-contents relative inline-block group">
+            <p class="li-item overflow-hidden relative">
+              <span 
+                set:text={el.text} 
+                class="li-origin inline-block transition-all duration-300 group-hover:-translate-y-6 group-hover:text-blue-400" 
+              />
+              <span 
+                set:text={el.text} 
+                class="li-clone absolute top-0 left-0 z-10 translate-y-6 inline-block transition-all duration-300 group-hover:translate-y-0" 
+              />
+            </p>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style define:vars={{ "border-clr": clr }}>
+  /* アニメーションと特殊な clip-path だけを CSS で残します */
+  .nav-li-item {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .li-contents::after {
+    content: "";
+    height: 1px;
+    background-color: var(--border-clr);
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 0;
+  }
+
+  .li-contents:hover::after {
+    animation: border-b 0.25s ease-in-out forwards;
+  }
+
+  @keyframes border-b {
+    from { width: 0; }
+    to { width: 60%; }
+  }
+</style>

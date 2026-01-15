@@ -1,0 +1,35 @@
+---
+import Form from "../components/Project/Form.astro";
+import Layouts from "../layouts/Layouts.astro";
+import Header from "../components/Project/Header.astro";
+import Footer from "../components/Project/Footer.astro";
+import "../styles/front.css";
+
+import ja from "../locales/ja/translation.json";
+import en from "../locales/en/translation.json";
+import ko from "../locales/ko/translation.json";
+
+const locales = { ja, en, ko };
+const locale = (Astro.currentLocale as keyof typeof locales) || "ja";
+const t = locales[locale];
+---
+
+<Layouts title={t.common.title_contact}>
+  <Header />
+  <main class="main-wrapper contact">
+    <div class="py-10 md:py-20">
+      <Form hyperForm="https://hyperform.jp/api/YLmfWXFk" />
+    </div>
+  </main>
+  <Footer />
+</Layouts>
+
+<style>
+  /* 元のスタイルを維持 */
+  .contact {
+    --clr-base: #585858;
+    --clr-border: #9f9f9f;
+    --clr-pink: #f39fb9;
+    min-height: 60vh; /* 画面が寂しくならないよう高さを確保 */
+  }
+</style>

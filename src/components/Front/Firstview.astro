@@ -1,0 +1,59 @@
+---
+// 1. 古いライブラリを排除し、JSONを直接読み込む
+import ja from "../../locales/ja/translation.json";
+import en from "../../locales/en/translation.json";
+import ko from "../../locales/ko/translation.json";
+import cn from "classnames";
+
+const locales = { ja, en, ko };
+const defaultLang = "ja";
+const locale = (Astro.currentLocale as keyof typeof locales) || defaultLang;
+
+const t = locales[locale].home;
+---
+
+<div role="banner" class="text-white relative pt-24 firstview header-bg-none">
+<div class="matrix-rain"></div>
+  <div class="grid grid-cols-1 grid-rows-2 h-full place-content-start md:place-content-center w-full max-w-[1200px] mx-auto px-[4%] z-20">
+    <div>
+      <h2
+        class={cn(
+          "font-bold mb-3 md:mb-10 z-10 relative animation-from",
+          locale === "en" ? "whitespace-normal mt-6" : "whitespace-pre-line"
+        )}
+        style="font-size: clamp(1.5rem, 0.972rem + 2.254vw, 3rem);"
+      >
+        {t.layout_title}
+      </h2>
+    </div>
+    <p 
+      class="font-mont font-bold z-10 relative mb-6 animation-from-2"
+      style="font-size: clamp(1rem, 0.824rem + 0.751vw, 1.5rem);"
+    >
+      Dream the best dream<br />with the best team
+    </p>
+  </div>
+</div>
+
+<style>
+  /* エラーの元になる @apply を削除し、複雑なアニメーションのみ記述 */
+  .animation-from {
+    animation: show1 1.5s ease-in-out forwards;
+    animation-delay: 0.5s;
+    clip-path: inset(0 100% 0 0);
+  }
+  @keyframes show1 {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0); }
+  }
+
+  .animation-from-2 {
+    animation: show2 1.5s ease-in-out forwards;
+    animation-delay: 2s;
+    clip-path: inset(0 100% 0 0);
+  }
+  @keyframes show2 {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0); }
+  }
+</style>

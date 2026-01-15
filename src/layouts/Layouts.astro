@@ -1,0 +1,40 @@
+---
+import "../styles/global.css";
+import { G_TAG } from "@/utils/constant";
+
+interface Props {
+  title?: string;
+}
+const { title } = Astro.props;
+
+// 2. 現在の言語を取得
+const locale = Astro.currentLocale || "ja";
+
+// 3. 現在のページパスを取得し、ホーム判定（多言語対応版）
+const { pathname } = Astro.url;
+const isHome = pathname === "/" || pathname === `/${locale}/` || pathname === `/${locale}`;
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="google-site-verification" content="CCuLoqHB8TxcgESRs7AjpWdbJuxyy0aKYFtVZjT40js" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title ? title : "Demo Page"}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    </head>
+  <body class:list={[{ home: isHome }]}>
+    <slot />
+  </body>
+</html>
