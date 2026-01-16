@@ -11,16 +11,13 @@
     "build:sm": "astro build --mode sm",
     "build:prod": "astro build --mode production",
     "preview": "astro preview",
-    "astro": "astro",
-    "i18n": "astro-i18next generate"
+    "astro": "astro"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.7",
     "classnames": "^2.3.2",
     "gsap": "^3.11.4",
-    "i18next-browser-languagedetector": "^7.0.2",
-    "i18next-http-backend": "^2.2.1",
     "iso-639-1": "^2.1.15",
     "locale-emoji": "^0.3.0",
     "microcms-js-sdk": "^2.5.0",
